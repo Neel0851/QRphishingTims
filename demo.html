@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tim Hortons Reward Giveaway</title>
+  <style>
+    body { font-family: Arial, background: #fff8f0; text-align: center; padding: 50px; }
+    .container { background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px #ccc; display: inline-block; }
+    input, button { margin: 10px; padding: 10px; width: 80%; }
+    h1 { color: #d62828; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎉 Win a $25 Tim Hortons Gift Card!</h1>
+    <p>Enter your details to claim your reward:</p>
+    <input type="text" id="name" placeholder="Your Name"><br>
+    <input type="email" id="email" placeholder="Your Email"><br>
+    <button onclick="submitData()">Claim Now</button>
+    <p id="response"></p>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT_ID.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    const app = firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    function submitData() {
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+
+      db.collection("demo_submissions").add({
+        name: name,
+        email: email,
+        timestamp: new Date()
+      }).then(() => {
+        document.getElementById('response').innerText = "✅ Thank you! Your gift card will be emailed shortly.";
+      }).catch((error) => {
+        console.error("Error saving data: ", error);
+      });
+    }
+  </script>
+</body>
+</html>
