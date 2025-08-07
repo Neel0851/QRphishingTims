@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tim Hortons Reward Giveaway</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff8f0;
+      text-align: center;
+      padding: 50px;
+    }
+    .container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #ccc;
+      display: inline-block;
+      max-width: 400px;
+    }
+    input, button {
+      margin: 10px;
+      padding: 10px;
+      width: 90%;
+      font-size: 16px;
+    }
+    h1 {
+      color: #d62828;
+    }
+    #response {
+      color: green;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎉 Win a $25 Tim Hortons Gift Card!</h1>
+    <p>Enter your details to claim your reward:</p>
+    <input type="text" id="name" placeholder="Your Name"><br>
+    <input type="email" id="email" placeholder="Your Email"><br>
+    <button onclick="submitData()">Claim Now</button>
+    <p id="response"></p>
+  </div>
+
+  <script>
+    function submitData() {
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+
+      if (name && email) {
+        const userData = { name, email, timestamp: new Date().toISOString() };
+        localStorage.setItem('quishingDemoData', JSON.stringify(userData));
+        console.log("Captured Data:", userData);
+        document.getElementById('response').innerText = "✅ Thank you! Your gift card will be emailed shortly.";
+      } else {
+        document.getElementById('response').innerText = "⚠️ Please enter both name and email.";
+      }
+    }
+
+    // Show stored data if page is refreshed
+    window.onload = () => {
+      const stored = localStorage.getItem('quishingDemoData');
+      if (stored) {
+        const data = JSON.parse(stored);
+        console.log("Previously Captured Data:", data);
+        document.getElementById('response').innerText = "✅ You've already claimed your reward.";
+      }
+    };
+  </script>
+</body>
+</html>
